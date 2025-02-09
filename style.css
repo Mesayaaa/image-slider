@@ -5,28 +5,28 @@ body{
     font-family: Poppins;
 }
 :root{
-    --item1-transform: translateX(-100%) translateY(-5%) scale(1.5);
-    --item1-filter: blur(30px);
+    --item1-transform: translateX(-100%) translateY(0%) scale(1.2);
+    --item1-filter: blur(20px);
     --item1-zIndex: 11;
     --item1-opacity: 0;
 
-    --item2-transform: translateX(0);
+    --item2-transform: translateX(0) translateY(0);
     --item2-filter: blur(0px);
     --item2-zIndex: 10;
     --item2-opacity: 1;
 
-    --item3-transform: translate(50%,10%) scale(0.8);
+    --item3-transform: translate(50%, 0%) scale(0.8);
     --item3-filter: blur(10px);
     --item3-zIndex: 9;
     --item3-opacity: 1;
 
-    --item4-transform: translate(90%,20%) scale(0.5);
-    --item4-filter: blur(30px);
+    --item4-transform: translate(90%, 0%) scale(0.6);
+    --item4-filter: blur(20px);
     --item4-zIndex: 8;
     --item4-opacity: 1;
     
-    --item5-transform: translate(120%,30%) scale(0.3);
-    --item5-filter: blur(40px);
+    --item5-transform: translate(120%, 0%) scale(0.4);
+    --item5-filter: blur(30px);
     --item5-zIndex: 7;
     --item5-opacity: 0;
 }
@@ -321,13 +321,14 @@ header nav a{
 }
 .arrows{
     position: absolute;
-    bottom: 10%;
+    bottom: 25%;
     width: 1140px;
     max-width: 90%;
     display: flex;
     justify-content: space-between;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 100;
 }
 #prev,
 #next{
@@ -337,12 +338,15 @@ header nav a{
     font-family: monospace;
     border: 1px solid #5555;
     font-size: large;
-    bottom: 20%;
-    left: 10%;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
-#next{
-    left: unset;
-    right: 10%;
+#prev:hover,
+#next:hover {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 #back{
     position: absolute;
@@ -402,43 +406,237 @@ header nav a{
     /* mobile */
     .carousel{
         height: 100vh;
-        min-height: 600px;
+        min-height: 100vh;
+        margin-top: 0;
+        display: flex;
+        align-items: center;
     }
+
     .carousel .list{
-        height: 100%;
+        height: 90vh;
+        display: flex;
+        align-items: center;
     }
+
     .carousel .list .item{
         width: 100%;
-        height: 100%;
-        font-size: 10px;
+        height: auto;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-    }
-    .carousel .list .item img{
-        width: 40%;
-        max-height: 50vh;
-        object-fit: contain;
-    }
-    .carousel.showDetail .list .item:nth-child(2) .detail{
-        backdrop-filter: blur(10px);
-        font-size: small;
+        align-items: center;
         padding: 20px;
-        max-height: 80vh;
-        overflow-y: auto;
+        box-sizing: border-box;
+        gap: 15px;
     }
+
+    .carousel .list .item img{
+        width: 65%;
+        height: auto;
+        position: relative;
+        right: auto;
+        top: 0;
+        transform: none;
+        margin: 10px auto;
+        display: block;
+        object-fit: contain;
+        max-height: 35vh;
+    }
+
     .carousel .list .item:nth-child(2) .introduce{
-        width: 50%;
-    }
-    .carousel .list .item:nth-child(2) .introduce .des,
-    .carousel.showDetail .list .item:nth-child(2) .detail .des{
-        height: 100px;
-        overflow: auto;
-    }
-    .carousel.showDetail .list .item:nth-child(2) .detail .checkout{
+        width: 90%;
+        position: relative;
+        top: 0;
+        transform: none;
+        text-align: center;
+        padding: 10px;
         display: flex;
-        width: max-content;
-        float: right;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .carousel .list .item .introduce .title{
+        font-size: 1.6em;
+        margin: 0;
+    }
+
+    .carousel .list .item .introduce .topic{
+        font-size: 2.2em;
+        margin: 5px 0;
+        line-height: 1.2;
+    }
+
+    .carousel .list .item .introduce .des{
+        font-size: 0.9em;
+        margin: 10px 0;
+        line-height: 1.5;
+        color: #555;
+    }
+
+    /* Penyesuaian tombol navigasi */
+    .arrows{
+        bottom: 30%;
+        width: 90%;
+        padding: 0;
+        position: fixed;
+    }
+
+    #prev, #next{
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(5px);
+        border: none;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Penyesuaian tampilan detail */
+    .carousel.showDetail .list .item:nth-child(2){
+        height: 100vh;
+        overflow-y: auto;
+        padding-bottom: 60px;
+    }
+
+    .carousel.showDetail .list .item:nth-child(2) img{
+        width: 55%;
+        margin: 15px auto;
+        max-height: 30vh;
+    }
+
+    .carousel.showDetail .list .item:nth-child(2) .detail{
+        width: 90%;
+        margin: 0 auto;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .carousel.showDetail .list .item:nth-child(2) .detail .title{
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+
+    .carousel.showDetail .list .item:nth-child(2) .detail .des{
+        font-size: 0.9em;
+        line-height: 1.6;
+        margin: 15px 0;
+        color: #444;
+    }
+
+    .carousel.showDetail .list .item:nth-child(2) .detail .specifications{
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 15px 0;
+        margin-top: 15px;
+    }
+
+    .carousel.showDetail .list .item:nth-child(2) .detail .specifications div{
+        width: calc(50% - 10px);
+        text-align: center;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .carousel.showDetail .list .item:nth-child(2) .detail .specifications div p{
+        margin: 5px 0;
+    }
+
+    .carousel.showDetail .list .item:nth-child(2) .detail .specifications div p:first-child{
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* Penyesuaian background gradient */
+    .carousel::before{
+        width: 100%;
+        height: 60%;
+        top: 20%;
+        left: 0;
+        transform: none;
+        border-radius: 0;
+        opacity: 0.7;
+        filter: blur(100px);
+    }
+
+    /* Tambahan untuk scroll yang lebih smooth */
+    .carousel .list .item{
+        scrollbar-width: thin;
+        scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+    }
+
+    .carousel .list .item::-webkit-scrollbar{
+        width: 6px;
+    }
+
+    .carousel .list .item::-webkit-scrollbar-thumb{
+        background: rgba(155, 155, 155, 0.5);
+        border-radius: 10px;
+    }
+
+    /* Tambahkan override untuk mobile */
+    .carousel .list .item:nth-child(1),
+    .carousel .list .item:nth-child(2),
+    .carousel .list .item:nth-child(3),
+    .carousel .list .item:nth-child(4),
+    .carousel .list .item:nth-child(5) {
+        transform: none !important; /* Mencegah transformasi Y pada mobile */
+        top: 0;
+        transition: all 0.5s ease;
+    }
+
+    .carousel .list .item {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    /* Perbaiki animasi untuk mobile */
+    @keyframes transformFromPosition2 {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes transformFromPosition3 {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes transformFromPosition4 {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes transformFromPosition5 {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    /* Perbaiki posisi item saat transisi */
+    .carousel.next .item,
+    .carousel.prev .item {
+        transform: translateX(0) !important;
     }
 }
 
@@ -448,4 +646,16 @@ html, body {
     padding: 0;
     min-height: 100vh;
     background-color: #F4F4F4;
+}
+
+/* Tambahkan style untuk h2 */
+h2 {
+    margin: 20px 0; /* Ubah margin sesuai kebutuhan */
+}
+
+/* Tambahkan media query untuk tablet */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .arrows {
+        bottom: 30%; /* Posisi untuk tablet */
+    }
 }
