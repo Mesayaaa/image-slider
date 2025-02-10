@@ -53,8 +53,9 @@ header nav a{
 .carousel{
     position: relative;
     height: 800px;
-    overflow: hidden;
-    margin-top: -50px;
+    overflow: visible;
+    margin-top: 20px;
+    padding-top: 30px;
 }
 .carousel .list{
     position: absolute;
@@ -63,6 +64,7 @@ header nav a{
     height: 80%;
     left: 50%;
     transform: translateX(-50%);
+    padding-bottom: 100px;
 }
 .carousel .list .item{
     position: absolute;
@@ -87,7 +89,6 @@ header nav a{
     transform: translateY(-50%);
     transition: right 1.5s;
     border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
@@ -337,7 +338,8 @@ header nav a{
     justify-content: space-between;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 100;
+    z-index: 1000;
+    pointer-events: auto;
 }
 #prev,
 #next{
@@ -351,6 +353,8 @@ header nav a{
     backdrop-filter: blur(5px);
     cursor: pointer;
     transition: all 0.3s ease;
+    z-index: 1001;
+    pointer-events: auto;
 }
 #prev:hover,
 #next:hover {
@@ -416,9 +420,11 @@ header nav a{
     .carousel{
         height: 100vh;
         min-height: 100vh;
-        margin-top: 0;
+        margin-top: 30px;
+        padding-top: 20px;
         display: flex;
         align-items: center;
+        padding-bottom: 220px;
     }
 
     .carousel .list{
@@ -462,6 +468,7 @@ header nav a{
         display: flex;
         flex-direction: column;
         gap: 10px;
+        margin-bottom: 80px;
     }
 
     .carousel .list .item .introduce .title{
@@ -486,21 +493,35 @@ header nav a{
     }
 
     /* Penyesuaian tombol navigasi */
-    .arrows{
-        bottom: 30%;
+    .arrows {
+        position: fixed;
+        bottom: 45%;
         width: 90%;
         padding: 0;
-        position: fixed;
+        z-index: 1000;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none; /* Pastikan container tidak menghalangi interaksi */
     }
 
-    #prev, #next{
+    #prev, #next {
         width: 40px;
         height: 40px;
         font-size: 18px;
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.9);
         backdrop-filter: blur(5px);
         border: none;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1001;
+        pointer-events: auto; /* Aktifkan interaksi untuk tombol */
+        cursor: pointer;
+    }
+
+    #prev:hover, #next:hover {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     }
 
     /* Penyesuaian tampilan detail */
@@ -524,7 +545,6 @@ header nav a{
         background: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(10px);
         border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     }
 
     .carousel.showDetail .list .item:nth-child(2) .detail .title{
@@ -553,7 +573,6 @@ header nav a{
         background: rgba(255, 255, 255, 0.9);
         padding: 10px;
         border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .carousel.showDetail .list .item:nth-child(2) .detail .specifications div p{
@@ -652,6 +671,26 @@ header nav a{
     .carousel.prev .item {
         transform: translateX(0) !important;
     }
+
+    h2 {
+        font-size: 1.5em;
+        padding: 0 20px;
+        margin: 15px 0 25px 0;
+    }
+
+    .button-container {
+        bottom: -30px;
+        padding-top: 70px;
+    }
+
+    .arrow {
+        font-size: 40px;
+        margin-bottom: 15px;
+    }
+
+    #playAudio {
+        margin-bottom: 30px;
+    }
 }
 
 /* Tambahkan style untuk body dan html */
@@ -678,11 +717,19 @@ h2 {
     .arrows {
         bottom: 30%; /* Posisi untuk tablet */
     }
+
+    .carousel {
+        margin-top: 25px;
+        padding-top: 25px;
+    }
+
+    h2 {
+        margin: 15px 0 30px 0;
+    }
 }
 
 .item img {
-    border-radius: 15px; /* Adjust the value as needed */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjust the shadow values as needed */
+    border-radius: 15px; /* Pertahankan border-radius */
 }
 
 /* Style for the play button */
@@ -737,17 +784,27 @@ h2 {
         font-size: 12px;
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     }
+
+    .carousel {
+        margin-top: 20px;
+        padding-top: 15px;
+    }
+
+    h2 {
+        margin: 10px 0 20px 0;
+    }
 }
 
 /* Update posisi button container */
 .button-container {
     text-align: center;
     position: absolute;
-    bottom: 20px;
+    bottom: 5px;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
     z-index: 100;
+    padding-top: 40px;
 }
 
 /* Update style untuk arrow */
@@ -757,6 +814,7 @@ h2 {
     animation: bounce 1s infinite;
     text-align: center;
     line-height: 1;
+    margin-bottom: 10px;
 }
 
 /* Keyframes for the bounce animation */
@@ -776,14 +834,21 @@ h2 {
         height: 100vh;
         min-height: auto;
         margin-top: 0;
-    }
-
-    .arrow {
-        font-size: 50px;
+        padding-bottom: 150px;
     }
 
     .button-container {
-        bottom: 15%;
+        bottom: 10%;
+        padding-top: 50px;
+    }
+
+    .arrow {
+        font-size: 40px;
+        margin-bottom: 15px;
+    }
+
+    .carousel .list .item .introduce {
+        margin-bottom: 80px;
     }
 }
 
@@ -807,14 +872,20 @@ h2 {
     /* For smaller mobile phones */
     .carousel {
         height: 90vh;
+        padding-bottom: 180px;
     }
 
     .arrow {
-        font-size: 40px;
+        font-size: 35px;
     }
 
     .button-container {
-        bottom: 10%;
+        bottom: 8%;
+        padding-top: 60px;
+    }
+
+    .carousel .list .item .introduce {
+        margin-bottom: 100px;
     }
 }
 
@@ -828,11 +899,25 @@ h2 {
 /* For devices in landscape mode */
 @media screen and (orientation: landscape) and (max-height: 500px) {
     .carousel {
-        height: 120vh;
+        height: auto;
+        min-height: 120vh;
+        padding-bottom: 200px;
     }
 
     .button-container {
-        bottom: 20%;
+        position: relative;
+        bottom: auto;
+        margin-top: 40px;
+        padding-top: 30px;
+    }
+
+    .arrow {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .carousel .list .item .introduce {
+        margin-bottom: 120px;
     }
 }
 
@@ -982,5 +1067,313 @@ h2 {
     .carousel .list .item img {
         width: 45%;
         object-fit: cover;
+    }
+}
+
+/* Khusus untuk iPad Mini (768px - 820px) */
+@media screen and (min-width: 768px) and (max-width: 820px) {
+    .carousel {
+        height: 100vh;
+        min-height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        padding-bottom: 150px;
+    }
+
+    .carousel .list {
+        height: 90vh;
+        display: flex;
+        align-items: center;
+    }
+
+    .carousel .list .item {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+        gap: 15px;
+    }
+
+    .carousel .list .item img {
+        width: 65%;
+        height: auto;
+        position: relative;
+        right: auto;
+        top: 0;
+        transform: none;
+        margin: 10px auto;
+        display: block;
+        object-fit: contain;
+        max-height: 35vh;
+        border-radius: 15px;
+    }
+
+    /* Khusus untuk gambar vior.png */
+    .carousel .list .item img[src*="vior.png"] {
+        width: 40%;
+        height: auto;
+        max-height: 35vh;
+    }
+
+    .carousel .list .item:nth-child(2) .introduce {
+        width: 90%;
+        position: relative;
+        top: 0;
+        transform: none;
+        text-align: center;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 80px;
+    }
+
+    .carousel .list .item .introduce .title {
+        font-size: 1.8em;
+        margin: 0;
+        line-height: 1.3;
+        padding: 0 10px;
+    }
+
+    .carousel .list .item .introduce .des {
+        font-size: 1em;
+        margin: 10px 0;
+        line-height: 1.5;
+        color: #555;
+        padding: 0 10px;
+    }
+
+    /* Update posisi arrows untuk iPad Mini */
+    .arrows {
+        position: fixed;
+        bottom: 45%;
+        width: 90%;
+        padding: 0;
+        z-index: 1000;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none; /* Pastikan container tidak menghalangi interaksi */
+    }
+
+    #prev, #next {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(5px);
+        border: none;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1001;
+        pointer-events: auto; /* Aktifkan interaksi untuk tombol */
+        cursor: pointer;
+    }
+
+    #prev:hover, #next:hover {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    /* Reset transformasi default */
+    .carousel .list .item:nth-child(1),
+    .carousel .list .item:nth-child(2),
+    .carousel .list .item:nth-child(3),
+    .carousel .list .item:nth-child(4),
+    .carousel .list .item:nth-child(5) {
+        transform: none !important;
+        top: 0;
+        transition: all 0.5s ease;
+    }
+
+    .carousel .list .item {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    /* Perbaiki animasi */
+    @keyframes transformFromPosition2 {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes transformFromPosition3 {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes transformFromPosition4 {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes transformFromPosition5 {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    /* Perbaiki posisi item saat transisi */
+    .carousel.next .item,
+    .carousel.prev .item {
+        transform: translateX(0) !important;
+    }
+
+    /* Penyesuaian background gradient */
+    .carousel::before {
+        width: 100%;
+        height: 60%;
+        top: 20%;
+        left: 0;
+        transform: none;
+        border-radius: 0;
+        opacity: 0.7;
+        filter: blur(100px);
+    }
+
+    /* Button container */
+    .button-container {
+        bottom: 8%;
+        padding-top: 60px;
+    }
+
+    .arrow {
+        font-size: 50px;
+        margin-bottom: 20px;
+    }
+
+    #playAudio {
+        max-width: 80%;
+        font-size: 15px;
+        padding: 12px 25px;
+    }
+}
+
+/* Update untuk landscape mode */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .button-container {
+        position: relative;
+        bottom: auto;
+        margin-top: 60px;
+        padding-top: 40px;
+    }
+}
+
+/* Update untuk mobile */
+@media screen and (max-width: 767px) {
+    .carousel {
+        padding-bottom: 220px;
+    }
+
+    .button-container {
+        bottom: -30px;
+        padding-top: 70px;
+    }
+
+    .arrow {
+        font-size: 40px;
+        margin-bottom: 15px;
+    }
+
+    #playAudio {
+        margin-bottom: 30px;
+    }
+}
+
+/* Khusus untuk mobile kecil */
+@media screen and (max-width: 480px) {
+    .carousel {
+        padding-bottom: 250px;
+    }
+
+    .button-container {
+        bottom: -40px;
+        padding-top: 80px;
+    }
+
+    .arrow {
+        font-size: 35px;
+        margin-bottom: 20px;
+    }
+
+    #playAudio {
+        margin-bottom: 35px;
+    }
+}
+
+/* Untuk device sangat kecil */
+@media screen and (max-width: 360px) {
+    .carousel {
+        padding-bottom: 280px;
+    }
+
+    .button-container {
+        bottom: -50px;
+        padding-top: 90px;
+    }
+}
+
+/* Tambahkan style untuk tablet yang lebih besar */
+@media screen and (min-width: 821px) and (max-width: 1024px) {
+    .button-container {
+        bottom: 20px;
+        padding-top: 50px;
+    }
+
+    .carousel {
+        padding-bottom: 150px;
+    }
+}
+
+/* Update untuk desktop */
+@media screen and (min-width: 1025px) {
+    .button-container {
+        bottom: 10px;
+        padding-top: 45px;
+    }
+
+    .carousel {
+        padding-bottom: 120px;
+    }
+
+    .carousel .list .item img[src*="vior.png"] {
+        width: 50% !important;
+        height: auto !important;
+        object-fit: contain;
+        margin: auto;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+/* Untuk tablet besar */
+@media screen and (min-width: 992px) and (max-width: 1024px) {
+    .carousel .list .item img[src*="vior.png"] {
+        width: 30% !important;
+        height: auto !important;
+        object-fit: contain;
     }
 }
