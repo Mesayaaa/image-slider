@@ -86,6 +86,12 @@ header nav a{
     top: 50%;
     transform: translateY(-50%);
     transition: right 1.5s;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
 
 .carousel .list .item .introduce{
@@ -104,7 +110,8 @@ header nav a{
 .carousel .list .item .introduce .title{
     font-size: 2em;
     font-weight: 500;
-    line-height: 1em;
+    line-height: 1.2;
+    margin-bottom: 10px;
 }
 .carousel .list .item .introduce .topic{
     font-size: 4em;
@@ -113,6 +120,8 @@ header nav a{
 .carousel .list .item .introduce .des{
     font-size: small;
     color: #5559;
+    line-height: 1.4;
+    margin-top: 8px;
 }
 .carousel .list .item .introduce .seeMore{
     font-family: Poppins;
@@ -440,6 +449,7 @@ header nav a{
         display: block;
         object-fit: contain;
         max-height: 35vh;
+        border-radius: 15px;
     }
 
     .carousel .list .item:nth-child(2) .introduce{
@@ -457,6 +467,8 @@ header nav a{
     .carousel .list .item .introduce .title{
         font-size: 1.6em;
         margin: 0;
+        line-height: 1.3;
+        padding: 0 10px;
     }
 
     .carousel .list .item .introduce .topic{
@@ -470,6 +482,7 @@ header nav a{
         margin: 10px 0;
         line-height: 1.5;
         color: #555;
+        padding: 0 10px;
     }
 
     /* Penyesuaian tombol navigasi */
@@ -501,6 +514,7 @@ header nav a{
         width: 55%;
         margin: 15px auto;
         max-height: 30vh;
+        border-radius: 15px;
     }
 
     .carousel.showDetail .list .item:nth-child(2) .detail{
@@ -651,11 +665,322 @@ html, body {
 /* Tambahkan style untuk h2 */
 h2 {
     margin: 20px 0; /* Ubah margin sesuai kebutuhan */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    white-space: normal;
+    line-height: 1.3;
+    padding: 0 15px;
 }
 
 /* Tambahkan media query untuk tablet */
 @media screen and (min-width: 768px) and (max-width: 991px) {
     .arrows {
         bottom: 30%; /* Posisi untuk tablet */
+    }
+}
+
+.item img {
+    border-radius: 15px; /* Adjust the value as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adjust the shadow values as needed */
+}
+
+/* Style for the play button */
+#playAudio {
+    background: white;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 12px 28px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 20px auto;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.3;
+    max-width: 80%;
+}
+
+/* Hover effect for the button */
+#playAudio:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Active state for the button */
+#playAudio:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Media Queries for button responsiveness */
+@media screen and (max-width: 768px) {
+    #playAudio {
+        padding: 10px 24px;
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #playAudio {
+        padding: 8px 20px;
+        font-size: 12px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Update posisi button container */
+.button-container {
+    text-align: center;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 100;
+}
+
+/* Update style untuk arrow */
+.arrow {
+    font-size: 100px;
+    color: #000000;
+    animation: bounce 1s infinite;
+    text-align: center;
+    line-height: 1;
+}
+
+/* Keyframes for the bounce animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0); /* Original position */
+    }
+    50% {
+        transform: translateY(-10%); /* Move up by 10% */
+    }
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+    /* For mobile phones */
+    .carousel {
+        height: 100vh;
+        min-height: auto;
+        margin-top: 0;
+    }
+
+    .arrow {
+        font-size: 50px;
+    }
+
+    .button-container {
+        bottom: 15%;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    /* For tablets */
+    .carousel {
+        height: auto;
+        min-height: 600px;
+    }
+
+    .arrow {
+        font-size: 70px;
+    }
+
+    .button-container {
+        bottom: 12%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* For smaller mobile phones */
+    .carousel {
+        height: 90vh;
+    }
+
+    .arrow {
+        font-size: 40px;
+    }
+
+    .button-container {
+        bottom: 10%;
+    }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1366px) {
+    /* For smaller desktops */
+    .arrow {
+        font-size: 80px;
+    }
+}
+
+/* For devices in landscape mode */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .carousel {
+        height: 120vh;
+    }
+
+    .button-container {
+        bottom: 20%;
+    }
+}
+
+/* Style untuk love confetti */
+.love-particle {
+    position: fixed;
+    pointer-events: none;
+    color: rgba(255, 182, 193, 0.8);
+    font-size: 24px;
+    animation: floatUp 4s ease-out forwards;
+    z-index: 1000;
+    will-change: transform, opacity; /* Optimize GPU acceleration */
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(var(--x) * 2), -300px) rotate(calc(var(--r) * 2));
+        opacity: 0;
+    }
+}
+
+/* Optimize media queries for love particles */
+@media screen and (max-width: 768px) {
+    .love-particle {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .love-particle {
+        font-size: 18px;
+    }
+}
+
+/* Update style untuk text wrapping */
+.carousel .list .item .introduce .title,
+.carousel .list .item .introduce .des,
+.carousel .list .item .detail .title,
+.carousel .list .item .detail .des {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    white-space: normal;
+}
+
+/* Update untuk heading utama */
+h2 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    white-space: normal;
+    line-height: 1.3;
+    padding: 0 15px;
+}
+
+/* Update untuk tombol audio */
+#playAudio {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.3;
+    max-width: 80%;
+    padding: 12px 20px;
+}
+
+/* Penyesuaian untuk mobile */
+@media screen and (max-width: 767px) {
+    .carousel .list .item .introduce .title {
+        font-size: 1.6em;
+        line-height: 1.3;
+        padding: 0 10px;
+    }
+
+    .carousel .list .item .introduce .des {
+        padding: 0 10px;
+        line-height: 1.5;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        padding: 0 20px;
+        margin: 15px 0;
+    }
+
+    #playAudio {
+        max-width: 90%;
+        font-size: 13px;
+        padding: 10px 15px;
+    }
+}
+
+/* Penyesuaian khusus untuk iPad Mini dan tablet serupa */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .carousel .list .item .introduce .title {
+        font-size: 1.8em;
+        line-height: 1.3;
+        padding: 0 15px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        white-space: normal;
+    }
+
+    .carousel .list .item .introduce .des {
+        font-size: 0.95em;
+        line-height: 1.5;
+        padding: 0 15px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        margin: 12px 0;
+    }
+
+    .carousel .list .item:nth-child(2) .introduce {
+        width: 45%;
+        max-width: 380px;
+    }
+
+    h2 {
+        font-size: 1.7em;
+        padding: 0 25px;
+        margin: 20px 10px;
+        text-align: center;
+    }
+
+    #playAudio {
+        max-width: 85%;
+        font-size: 14px;
+        padding: 12px 25px;
+        margin: 15px auto;
+    }
+
+    .carousel .list .item .detail .title,
+    .carousel .list .item .detail .des {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        white-space: normal;
+        padding: 0 15px;
+    }
+
+    /* Penyesuaian untuk gambar pada tablet */
+    .carousel .list .item img {
+        width: 45%;
+        object-fit: cover;
     }
 }
