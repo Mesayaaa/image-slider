@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="loader">
+        <div class="loader-content">
+            <div class="heart-loader"></div>
+            <div class="loading-text">Loading memories...</div>
+        </div>
+    </div>
     <div>
         <h5 style="text-align: center;">MAAF TAPI MAS MALU BGTT APALAGI KALO KM KLIK YANG PALING BAWAH SBELUM MULAI BACAA.. volumenya pelan aja ya, malu</h5>
     </div>
@@ -112,9 +118,11 @@
         const MAX_PARTICLES = 20; // Batasi jumlah maksimal particle
         
         function createLoveParticle(x, y) {
+            if (activeParticles.length >= MAX_PARTICLES) return;
+            
             const particle = document.createElement('div');
             particle.className = 'love-particle';
-            particle.innerHTML = '♥';
+            particle.innerHTML = ['♥', '💕', '💗'][Math.floor(Math.random() * 3)];
             particle.style.left = x + 'px';
             particle.style.top = y + 'px';
             
@@ -198,6 +206,27 @@
                 playButton.textContent = 'MAS NYANYI BUAT KM WKWKWKW';
                 stopParticleCreation();
             }
+        });
+
+        // Add loader handling
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const loader = document.querySelector('.loader');
+                loader.classList.add('fade-out');
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }, 1500);
+        });
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
 </body>
