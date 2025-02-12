@@ -122,18 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Fungsi untuk mengontrol visibilitas button container
+// Update fungsi handleScroll dengan logika yang dibalik
 function handleScroll() {
     if (!isScrolling) {
         window.requestAnimationFrame(() => {
             const currentScrollPosition = window.pageYOffset;
             const scrollingDown = currentScrollPosition > lastScrollPosition;
             
-            // Jika scroll ke bawah dan tidak di bagian atas, sembunyikan
-            if (scrollingDown && currentScrollPosition > 100) {
-                buttonContainer.classList.add('hidden');
-            } else {
+            // Tampilkan button saat scroll ke bawah, sembunyikan saat scroll ke atas
+            if (scrollingDown) {
                 buttonContainer.classList.remove('hidden');
+            } else if (currentScrollPosition < lastScrollPosition) {
+                buttonContainer.classList.add('hidden');
             }
             
             lastScrollPosition = currentScrollPosition;
@@ -146,13 +146,11 @@ function handleScroll() {
 // Tambahkan event listener untuk scroll
 window.addEventListener('scroll', handleScroll, { passive: true });
 
-// Tambahkan debounce untuk menampilkan kembali button setelah scroll berhenti
+// Update debounce scroll untuk mempertahankan button tetap terlihat
 let scrollTimeout;
 window.addEventListener('scroll', () => {
     clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-        buttonContainer.classList.remove('hidden');
-    }, 1000);
+    // Hapus timeout karena kita ingin button tetap terlihat saat scroll ke bawah
 }, { passive: true });
 
 // Update posisi button container saat resize window
