@@ -7,10 +7,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="loader">
+    <div class="intro-container">
+        <div class="intro-content">
+            <div class="intro-text">
+                <h1 class="intro-title">alooo sayang ♥</h1>
+                <p class="intro-message">Mas bikin ini khusus buat km</p>
+                <p class="intro-message">Mau liat?</p>
+            </div>
+            <button class="start-button" style="display: block; margin: 0 auto;">
+                <span>next</span>
+            </button>
+        </div>
+    </div>
+    <div class="loader" style="display: none;">
         <div class="loader-content">
-            <div class="heart-loader"></div>
-            <div class="loading-text">Loading memories...</div>
+            <div class="loading-text">Loading...</div>
         </div>
     </div>
     <div style="margin-left: 20px; margin-right: 20px;">
@@ -359,23 +370,72 @@
             }
         }
 
-        // Add loader handling
         document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const loader = document.querySelector('.loader');
-                loader.classList.add('fade-out');
+            const startButton = document.querySelector('.start-button');
+            const introContainer = document.querySelector('.intro-container');
+            const introContent = document.querySelector('.intro-content');
+            const loader = document.querySelector('.loader');
+            const carousel = document.querySelector('.carousel');
+            const warningText = document.querySelector('h5');
+            
+            if (carousel) carousel.style.display = 'none';
+            if (warningText) warningText.style.display = 'none';
+            
+            startButton.addEventListener('click', () => {
+                // Fade out intro content first
+                introContent.classList.add('fade-out');
+                
                 setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 500);
-            }, 1500);
-        });
+                    // Fade out entire intro container
+                    introContainer.classList.add('fade-out');
+                    
+                    // Show and fade in loader
+                    loader.style.display = 'flex';
+                    setTimeout(() => {
+                        loader.classList.add('fade-in');
+                    }, 50);
+                    
+                    // After loader animation
+                    setTimeout(() => {
+                        // Fade out loader
+                        loader.classList.remove('fade-in');
+                        loader.classList.add('fade-out');
+                        
+                        setTimeout(() => {
+                            // Hide loader and show main content
+                            loader.style.display = 'none';
+                            if (carousel) {
+                                carousel.style.display = 'block';
+                                if (warningText) warningText.style.display = 'block';
+                                
+                                // Small delay before showing content
+                                setTimeout(() => {
+                                    carousel.classList.add('show');
+                                    if (warningText) {
+                                        warningText.style.opacity = '0';
+                                        warningText.style.transform = 'translateY(20px)';
+                                        warningText.style.transition = 'all 0.5s ease';
+                                        warningText.style.display = 'block';
+                                        
+                                        setTimeout(() => {
+                                            warningText.style.opacity = '1';
+                                            warningText.style.transform = 'translateY(0)';
+                                        }, 50);
+                                    }
+                                }, 50);
+                            }
+                        }, 500);
+                    }, 1500);
+                }, 300);
+            });
 
-        // Add smooth scroll behavior
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+            // Add smooth scroll behavior
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 });
             });
         });
