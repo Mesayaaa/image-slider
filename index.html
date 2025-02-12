@@ -108,6 +108,66 @@
         Your browser does not support the audio element.
     </audio>
 
+    <div class="video-popup" id="videoPopup1">
+        <div class="video-container">
+            <div class="video-wrapper">
+                <video id="videoPlayer1" muted playsinline disablepictureinpicture>
+                    <source src="images/ayam.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <button class="close-video" id="closeVideo1">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-popup" id="videoPopup2">
+        <div class="video-container">
+            <div class="video-wrapper">
+                <video id="videoPlayer2" controls muted>
+                    <source src="images/dress.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <button class="close-video" id="closeVideo2">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-popup" id="videoPopup3">
+        <div class="video-container">
+            <div class="video-wrapper">
+                <video id="videoPlayer3" controls muted>
+                    <source src="images/ikea.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <button class="close-video" id="closeVideo3">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-popup" id="videoPopup4">
+        <div class="video-container">
+            <div class="video-wrapper">
+                <video id="videoPlayer4" controls muted>
+                    <source src="images/lucu.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <button class="close-video" id="closeVideo4">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-popup" id="videoPopup5">
+        <div class="video-container">
+            <div class="video-wrapper">
+                <video id="videoPlayer5" controls muted>
+                    <source src="images/natal.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <button class="close-video" id="closeVideo5">&times;</button>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
     <script>
         const audioPlayer = document.getElementById('backgroundAudio');
@@ -196,17 +256,100 @@
             clearInterval(particleInterval);
         }
         
+        let currentVideoIndex = 0;
+        const totalVideos = 5;
+        let isVideoPlaying = false;
+        
+        function showNextVideo() {
+            // Hide current video if any
+            const currentPopup = document.getElementById(`videoPopup${currentVideoIndex}`);
+            if (currentPopup) {
+                currentPopup.classList.remove('show');
+                const currentPlayer = document.getElementById(`videoPlayer${currentVideoIndex}`);
+                if (currentPlayer) {
+                    currentPlayer.pause();
+                    currentPlayer.currentTime = 0;
+                }
+            }
+            
+            // Update index and show next video
+            currentVideoIndex = (currentVideoIndex % totalVideos) + 1;
+            const nextPopup = document.getElementById(`videoPopup${currentVideoIndex}`);
+            const nextPlayer = document.getElementById(`videoPlayer${currentVideoIndex}`);
+            
+            if (nextPopup && nextPlayer) {
+                nextPopup.classList.add('show');
+                try {
+                    const playPromise = nextPlayer.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            console.log("Video autoplay prevented:", error);
+                        });
+                    }
+                } catch (error) {
+                    console.log("Error playing video:", error);
+                }
+            }
+        }
+        
+        function stopAllVideos() {
+            isVideoPlaying = false;
+            for(let i = 1; i <= totalVideos; i++) {
+                const popup = document.getElementById(`videoPopup${i}`);
+                const player = document.getElementById(`videoPlayer${i}`);
+                if (popup && player) {
+                    popup.classList.remove('show');
+                    player.pause();
+                    player.currentTime = 0;
+                }
+            }
+        }
+        
+        // Update button click handler
         playButton.addEventListener('click', function(e) {
             if (audioPlayer.paused) {
-                audioPlayer.play();
-                playButton.textContent = 'kalo mau ngepause, klik lagi aja yaa';
-                startParticleCreation(e);
+                audioPlayer.play().then(() => {
+                    playButton.textContent = 'kalo mau ngepause, klik lagi aja yaa';
+                    startParticleCreation(e);
+                    isVideoPlaying = true;
+                    showNextVideo();
+                }).catch(error => {
+                    console.log("Audio autoplay prevented:", error);
+                });
             } else {
                 audioPlayer.pause();
                 playButton.textContent = 'MAS NYANYI BUAT KM WKWKWKW';
                 stopParticleCreation();
+                stopAllVideos();
             }
         });
+        
+        // Handle video end
+        for(let i = 1; i <= totalVideos; i++) {
+            const videoPlayer = document.getElementById(`videoPlayer${i}`);
+            const closeButton = document.getElementById(`closeVideo${i}`);
+            
+            if (videoPlayer) {
+                videoPlayer.addEventListener('ended', function() {
+                    const popup = document.getElementById(`videoPopup${i}`);
+                    if (popup) {
+                        popup.classList.remove('show');
+                    }
+                });
+            }
+            
+            if (closeButton) {
+                closeButton.addEventListener('click', function() {
+                    const popup = document.getElementById(`videoPopup${i}`);
+                    const player = document.getElementById(`videoPlayer${i}`);
+                    if (popup && player) {
+                        popup.classList.remove('show');
+                        player.pause();
+                        player.currentTime = 0;
+                    }
+                });
+            }
+        }
 
         // Add loader handling
         document.addEventListener('DOMContentLoaded', () => {

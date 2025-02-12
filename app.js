@@ -3,6 +3,12 @@ let prevButton = document.getElementById('prev');
 let carousel = document.querySelector('.carousel');
 let listHTML = document.querySelector('.carousel .list');
 let seeMoreButtons = document.querySelectorAll('.seeMore');
+let lastScrollPosition = window.pageYOffset;
+let isScrolling = false;
+const buttonContainer = document.querySelector('.button-container');
+
+// Tambahkan di bagian atas file, setelah deklarasi variabel
+document.documentElement.style.backgroundColor = '#F4F4F4';
 
 nextButton.onclick = function(){
     showSlider('next');
@@ -100,7 +106,60 @@ document.getElementById('next')?.addEventListener('click', () => {
     setTimeout(initializeTypingAnimation, 100);
 });
 
-// Initialize pada load
+// Update event listener DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Sembunyikan loader jika ada
+    const loader = document.querySelector('.loader');
+    if (loader) {
+        loader.style.display = 'none';
+    }
+    
     initializeTypingAnimation();
+    
+    // Hapus pengaturan visibility dan opacity karena sudah diatur di CSS
+    if (buttonContainer) {
+        buttonContainer.classList.remove('hidden');
+    }
 });
+
+// Fungsi untuk mengontrol visibilitas button container
+function handleScroll() {
+    if (!isScrolling) {
+        window.requestAnimationFrame(() => {
+            const currentScrollPosition = window.pageYOffset;
+            const scrollingDown = currentScrollPosition > lastScrollPosition;
+            
+            // Jika scroll ke bawah dan tidak di bagian atas, sembunyikan
+            if (scrollingDown && currentScrollPosition > 100) {
+                buttonContainer.classList.add('hidden');
+            } else {
+                buttonContainer.classList.remove('hidden');
+            }
+            
+            lastScrollPosition = currentScrollPosition;
+            isScrolling = false;
+        });
+    }
+    isScrolling = true;
+}
+
+// Tambahkan event listener untuk scroll
+window.addEventListener('scroll', handleScroll, { passive: true });
+
+// Tambahkan debounce untuk menampilkan kembali button setelah scroll berhenti
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+        buttonContainer.classList.remove('hidden');
+    }, 1000);
+}, { passive: true });
+
+// Update posisi button container saat resize window
+window.addEventListener('resize', () => {
+    if (window.innerWidth <= 768) {
+        buttonContainer.style.bottom = '20px';
+    } else {
+        buttonContainer.style.bottom = '40px';
+    }
+}, { passive: true });
