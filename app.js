@@ -18,14 +18,10 @@ const showSlider = (type) => {
     carousel.classList.remove('next', 'prev');
     let items = document.querySelectorAll('.carousel .list .item');
     
-    // Reset opacity hanya untuk gambar yang akan menjadi aktif
-    const nextActiveItem = type === 'next' ? items[1] : items[0];
-    if (nextActiveItem) {
-        const img = nextActiveItem.querySelector('img');
-        if (img) {
-            img.style.opacity = '0';
-        }
-    }
+    // Tambahkan fade out untuk item yang akan hilang
+    items.forEach(item => {
+        item.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+    });
 
     if(type === 'next'){
         listHTML.appendChild(items[0]);
@@ -34,11 +30,13 @@ const showSlider = (type) => {
         listHTML.prepend(items[items.length - 1]);
         carousel.classList.add('prev');
     }
+
+    // Berikan waktu lebih lama untuk transisi
     clearTimeout(unAcceppClick);
     unAcceppClick = setTimeout(()=>{
         nextButton.style.pointerEvents = 'auto';
         prevButton.style.pointerEvents = 'auto';
-    }, 2000)
+    }, 1000);
 }
 seeMoreButtons.forEach((button) => {
     button.onclick = function(){
@@ -47,39 +45,19 @@ seeMoreButtons.forEach((button) => {
     }
 });
 
-// Update fungsi typeText dengan delay yang lebih lama
-function typeText(element, delay = 0) {
+// Update fungsi typeText untuk animasi text yang lebih halus
+function typeText(element, delay) {
     if (!element) return;
     
-    const text = element.textContent.trim();
-    element.textContent = '';
-    element.style.visibility = 'visible';
+    const text = element.textContent;
+    element.style.opacity = '0';
+    element.innerHTML = '';
     
-    // Buat container untuk menyimpan semua span
-    const container = document.createElement('div');
-    container.style.display = 'inline';
-    
-    // Pisahkan teks menjadi kata-kata
-    const words = text.split(' ');
-    
-    words.forEach((word, index) => {
-        // Buat span untuk kata
-        const span = document.createElement('span');
-        span.textContent = word;
-        span.className = 'typing-text';
-        span.style.animationDelay = `${delay + (index * 0.18)}s`;
-        container.appendChild(span);
-        
-        if (index < words.length - 1) {
-            const space = document.createElement('span');
-            space.textContent = ' ';
-            space.className = 'typing-text';
-            space.style.animationDelay = `${delay + (index * 0.2)}s`;
-            container.appendChild(space);
-        }
-    });
-    
-    element.appendChild(container);
+    setTimeout(() => {
+        element.style.opacity = '1';
+        element.classList.add('typing-text');
+        element.textContent = text;
+    }, delay * 1000);
 }
 
 // Update fungsi initializeTypingAnimation dengan delay yang lebih lama

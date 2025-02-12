@@ -134,29 +134,36 @@
             particle.style.setProperty('--x', randomX + 'px');
             particle.style.setProperty('--r', randomRotate + 'deg');
             
+            // Tambahkan transition untuk smooth appearance
+            particle.style.opacity = '0';
+            particle.style.transform = 'scale(0.5)';
+            
             document.body.appendChild(particle);
             
-            // Tambahkan particle ke array tracking
+            // Force reflow
+            void particle.offsetWidth;
+            
+            // Animate in
+            particle.style.opacity = '1';
+            particle.style.transform = 'scale(1)';
+            
             activeParticles.push(particle);
             
-            // Hapus particle setelah animasi selesai
+            // Smooth fade out
             setTimeout(() => {
-                if (particle.parentNode) {
-                    particle.parentNode.removeChild(particle);
-                }
-                const index = activeParticles.indexOf(particle);
-                if (index > -1) {
-                    activeParticles.splice(index, 1);
-                }
-            }, 4000); // Sesuaikan dengan durasi animasi di CSS
-            
-            // Jika jumlah particle melebihi batas, hapus yang paling lama
-            if (activeParticles.length > MAX_PARTICLES) {
-                const oldestParticle = activeParticles.shift();
-                if (oldestParticle.parentNode) {
-                    oldestParticle.parentNode.removeChild(oldestParticle);
-                }
-            }
+                particle.style.opacity = '0';
+                particle.style.transform = 'scale(0.5) translateY(-20px)';
+                
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                    const index = activeParticles.indexOf(particle);
+                    if (index > -1) {
+                        activeParticles.splice(index, 1);
+                    }
+                }, 400);
+            }, 3600);
         }
         
         let isCreatingParticles = false;
