@@ -203,11 +203,12 @@ header nav a{
 
 /* Animasi untuk carousel */
 .carousel {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-    visibility: hidden;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 0;
+    margin: 0;
 }
 
 .carousel.show {
@@ -283,26 +284,17 @@ header nav a{
 }
 
 /* carousel */
-.carousel{
-    position: relative;
-    height: 800px;
-    overflow: visible;
-    margin-top: 20px;
-    padding-top: 30px;
-}
 .carousel .list{
-    position: absolute;
-    width: 1140px;
-    max-width: 90%;
-    height: 80%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding-bottom: 100px;
+    width: 100%;
+    margin: 0;
+    padding: 0 20px; /* Memberikan padding yang konsisten */
+    box-sizing: border-box;
 }
 .carousel .list .item{
+    width: 100%;
+    box-sizing: border-box;
     position: absolute;
     left: 0%;
-    width: 70%;
     height: 100%;
     font-size: 15px;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -321,16 +313,15 @@ header nav a{
     transform: translateX(0);
 }
 .carousel .list .item img {
-    width: 50%;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 20px;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
     transition: transform 0.3s ease;
     will-change: transform, opacity;
-    border-radius: 15px;
-    box-shadow: none;
-    opacity: 0;
 }
 
 .carousel .list .item:nth-child(2) img {
@@ -2443,4 +2434,172 @@ body {
 h5 {
     transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
                 transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Add these styles for the ticket design */
+.ticket-container {
+    padding: 10px;
+    perspective: 1000px;
+    transform: scale(0.8); /* Ukuran lebih kecil */
+    display: flex; /* Tambahkan display flex */
+    justify-content: center; /* Pusatkan horizontal */
+    align-items: center; /* Pusatkan vertical */
+    width: 100%; /* Pastikan container mengambil lebar penuh */
+}
+
+.ticket {
+    background: #fff;
+    width: 300px;
+    border-radius: 8px;
+    padding: 15px;
+    transform-style: preserve-3d;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    animation: ticketFloat 3s ease-in-out infinite;
+    border: 1px solid rgba(255,107,107,0.3);
+    margin: 0 auto; /* Tambahkan margin auto */
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px dashed #ff6b6b;
+}
+
+.heart-icon {
+    font-size: 1.2em;
+    color: #ff6b6b;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.ticket-title {
+    font-size: 1em;
+    font-weight: bold;
+    color: #ff6b6b;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.ticket-content {
+    padding: 10px 0;
+    position: relative;
+}
+
+.ticket-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 0.8em;
+}
+
+.ticket-message {
+    text-align: center;
+    color: #ff6b6b;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin: 10px 0;
+    padding: 8px;
+    background: rgba(255,107,107,0.1);
+    border-radius: 6px;
+}
+
+.ticket-footer {
+    text-align: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px dashed #ff6b6b;
+}
+
+.barcode {
+    font-family: 'Libre Barcode 39', cursive;
+    font-size: 1.2em;
+    color: #333;
+    letter-spacing: -1px;
+    margin-bottom: 5px;
+}
+
+.ticket-serial {
+    font-size: 0.7em;
+    color: #999;
+    letter-spacing: 1px;
+}
+
+.ticket-stub {
+    position: relative;
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 2px dashed #ff6b6b;
+}
+
+.stub-content {
+    text-align: center;
+    font-size: 0.7em;
+    color: #ff6b6b;
+}
+
+/* Efek perforasi di sisi tiket */
+.ticket::before,
+.ticket::after {
+    content: '•';
+    position: absolute;
+    top: 50%;
+    color: #ff6b6b;
+    font-size: 0.8em;
+    transform: translateY(-50%);
+    opacity: 0.5;
+}
+
+.ticket::before {
+    left: 5px;
+}
+
+.ticket::after {
+    right: 5px;
+}
+
+@keyframes ticketFloat {
+    0%, 100% {
+        transform: translateY(0) rotate3d(1, 1, 1, 0deg);
+    }
+    50% {
+        transform: translateY(-3px) rotate3d(1, 1, 1, 2deg);
+    }
+}
+
+/* Efek hover yang lebih halus */
+.ticket:hover {
+    transform: translateY(-3px) rotate3d(1, 1, 1, 3deg);
+    box-shadow: 0 5px 20px rgba(255,107,107,0.2);
+}
+
+/* Efek shimmer yang lebih halus */
+.ticket::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255,255,255,0.05) 45%,
+        rgba(255,255,255,0.2) 50%,
+        rgba(255,255,255,0.05) 55%,
+        transparent 100%
+    );
+    transform: rotate(45deg);
+    animation: shimmer 4s infinite;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .ticket-container {
+        transform: scale(0.7); /* Lebih kecil di mobile */
+    }
 }
