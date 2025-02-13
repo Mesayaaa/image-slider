@@ -3,7 +3,7 @@ let prevButton = document.getElementById('prev');
 let carousel = document.querySelector('.carousel');
 let listHTML = document.querySelector('.carousel .list');
 let seeMoreButtons = document.querySelectorAll('.seeMore');
-let lastScrollPosition = window.pageYOffset;
+let lastScrollPosition = 0;
 let isScrolling = false;
 const buttonContainer = document.querySelector('.button-container');
 
@@ -122,17 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Update fungsi handleScroll dengan logika yang dibalik
+// Update fungsi handleScroll
 function handleScroll() {
     if (!isScrolling) {
         window.requestAnimationFrame(() => {
             const currentScrollPosition = window.pageYOffset;
             const scrollingDown = currentScrollPosition > lastScrollPosition;
+            const buttonContainer = document.querySelector('.button-container');
             
             // Tampilkan button saat scroll ke bawah, sembunyikan saat scroll ke atas
-            if (scrollingDown) {
+            if (scrollingDown && currentScrollPosition > 100) { // Tambah threshold
                 buttonContainer.classList.remove('hidden');
-            } else if (currentScrollPosition < lastScrollPosition) {
+            } else {
                 buttonContainer.classList.add('hidden');
             }
             
@@ -143,15 +144,14 @@ function handleScroll() {
     isScrolling = true;
 }
 
-// Tambahkan event listener untuk scroll
+// Pastikan event listener terpasang
 window.addEventListener('scroll', handleScroll, { passive: true });
 
-// Update debounce scroll untuk mempertahankan button tetap terlihat
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-    clearTimeout(scrollTimeout);
-    // Hapus timeout karena kita ingin button tetap terlihat saat scroll ke bawah
-}, { passive: true });
+// Sembunyikan button saat pertama kali load
+document.addEventListener('DOMContentLoaded', () => {
+    const buttonContainer = document.querySelector('.button-container');
+    buttonContainer.classList.add('hidden');
+});
 
 // Update posisi button container saat resize window
 window.addEventListener('resize', () => {
@@ -161,3 +161,53 @@ window.addEventListener('resize', () => {
         buttonContainer.style.bottom = '40px';
     }
 }, { passive: true });
+
+// Update video handling
+function showNextVideo() {
+    const currentPopup = document.getElementById(`videoPopup${currentVideoIndex}`);
+    if (currentPopup) {
+        currentPopup.classList.remove('show');
+        const currentPlayer = document.getElementById(`videoPlayer${currentVideoIndex}`);
+        if (currentPlayer) {
+            currentPlayer.pause();
+            currentPlayer.currentTime = 0;
+            currentPlayer.muted = true; // Pastikan video tetap muted
+        }
+    }
+    
+    currentVideoIndex = (currentVideoIndex % totalVideos) + 1;
+    const nextPopup = document.getElementById(`videoPopup${currentVideoIndex}`);
+    const nextPlayer = document.getElementById(`videoPlayer${currentVideoIndex}`);
+    
+    if (nextPopup && nextPlayer) {
+        nextPopup.classList.add('show');
+        nextPlayer.muted = true; // Pastikan video baru juga muted
+        try {
+            const playPromise = nextPlayer.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Video autoplay prevented:", error);
+                });
+            }
+        } catch (error) {
+            console.log("Error playing video:", error);
+        }
+    }
+}
+
+// Tambahkan event listener untuk mencegah unmute
+document.querySelectorAll('video').forEach(video => {
+    video.addEventListener('volumechange', () => {
+        video.muted = true; // Selalu kembalikan ke muted
+    });
+    
+    // Mencegah keyboard shortcuts
+    video.addEventListener('keydown', (e) => {
+        e.preventDefault();
+    });
+    
+    // Mencegah context menu
+    video.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+    });
+});

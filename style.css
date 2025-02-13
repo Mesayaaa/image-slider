@@ -587,7 +587,7 @@ header nav a{
         padding-top: 20px;
         display: flex;
         align-items: center;
-        padding-bottom: 220px;
+        padding-bottom: 100px;
     }
 
     .carousel .list{
@@ -836,17 +836,43 @@ header nav a{
     }
 
     .button-container {
-        bottom: 12%;
-        padding-top: 0;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 1000;
+        gap: 8px;
+        width: 100%;
+        padding: 0 20px;
+        box-sizing: border-box;
     }
 
     .arrow {
-        font-size: 35px;
-        margin-bottom: 8px;
+        font-size: 28px;
+        margin-bottom: 5px;
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+    .controls-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .control-button {
+        padding: 8px 15px !important;
+        font-size: 13px !important;
+        min-width: 200px;
+        max-width: 85vw;
     }
 
     #playAudio {
-        margin-bottom: 30px;
+        margin-bottom: 0;
     }
 }
 
@@ -912,7 +938,7 @@ h2 {
     font-size: 15px;
 }
 
-/* Update style untuk button container default */
+/* Tambahkan class untuk animasi hide/show button */
 .button-container {
     position: fixed;
     bottom: 20%;
@@ -922,9 +948,9 @@ h2 {
     flex-direction: column;
     align-items: center;
     z-index: 1000;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 1;
-    gap: 2px;
+    gap: 5px;
 }
 
 .button-container.hidden {
@@ -933,69 +959,178 @@ h2 {
     pointer-events: none;
 }
 
+/* Update style untuk controls wrapper */
+.controls-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hidden .controls-wrapper {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
 /* Update style untuk arrow */
 .arrow {
-    font-size: 40px;
-    margin-bottom: 5px;
+    font-size: 35px;
+    margin-bottom: 2px;
     animation: bounce 2s infinite;
-    transition: all 0.3s ease;
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(0, 0, 0, 0.6);
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-10px);
-    }
-    60% {
-        transform: translateY(-5px);
-    }
+.hidden .arrow {
+    opacity: 0;
+    transform: translateY(20px);
 }
 
-/* Media queries untuk responsivitas */
+/* Update media query untuk mobile */
 @media screen and (max-width: 768px) {
-    #prev,
-    #next {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
+    .button-container {
+        bottom: 15px;
+        padding-top: 0;
+        gap: 8px;
     }
 
     .arrow {
-        font-size: 35px;
-        margin-bottom: 3px;
-    }
-
-    #playAudio {
-        padding: 10px 20px;
-        font-size: 14px;
-        max-width: 85%;
+        font-size: 24px;
+        margin-bottom: 2px;
     }
 }
 
-@media screen and (max-width: 480px) {
-    #prev,
-    #next {
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-    }
+.control-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    font-size: 15px;
+    min-width: 250px;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+}
 
-    .arrow {
-        font-size: 30px;
-        margin-bottom: 10px;
-    }
+/* Efek hover yang lebih menarik */
+.control-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
 
-    #playAudio {
-        padding: 10px 20px;
+.control-button:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+/* Style khusus untuk button audio */
+#playAudio {
+    background: linear-gradient(45deg, #ff6b6b, #ff8585);
+    color: white;
+}
+
+#playAudio:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transition: all 0.6s;
+}
+
+#playAudio:hover:before {
+    left: 100%;
+}
+
+/* Style khusus untuk button video */
+#showVideo {
+    background: linear-gradient(45deg, #4fc3f7, #66d0ff);
+    color: white;
+}
+
+#showVideo:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transition: all 0.6s;
+}
+
+#showVideo:hover:before {
+    left: 100%;
+}
+
+/* Update video styles untuk mencegah interaksi user */
+.video-wrapper video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    max-height: 85vh;
+    background: #000;
+    margin: 0;
+    padding: 0;
+    pointer-events: none; /* Mencegah interaksi mouse */
+    user-select: none; /* Mencegah select text */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Disable context menu dan controls pada video */
+video::-webkit-media-controls {
+    display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+    display: none !important;
+}
+
+video::-webkit-media-controls-panel {
+    display: none !important;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .control-button {
+        padding: 8px 15px;
         font-size: 13px;
-        max-width: 90%;
+        min-width: 200px;
+    }
+
+    .control-button:hover {
+        transform: translateY(-2px) scale(1.01);
     }
 }
 
-/* Update style untuk arrow bawah */
+/* Update style untuk arrow */
 .arrow {
     font-size: 45px;
     color: rgba(0, 0, 0, 0.7);
@@ -1509,12 +1644,36 @@ h2 {
 /* Untuk device sangat kecil */
 @media screen and (max-width: 360px) {
     .carousel {
-        padding-bottom: 280px;
+        padding-bottom: 80px;
     }
 
     .button-container {
-        bottom: 15%;
-        padding-top: 0;
+        bottom: 15px;
+    }
+
+    .control-button {
+        padding: 6px 12px !important;
+        font-size: 12px !important;
+        min-width: 180px;
+    }
+
+    .control-button i {
+        font-size: 12px;
+        margin-right: 6px;
+    }
+
+    .button-container {
+        bottom: 12px;
+        gap: 6px;
+    }
+
+    .controls-wrapper {
+        gap: 6px;
+    }
+
+    .arrow {
+        font-size: 20px;
+        margin-bottom: 1px;
     }
 }
 
@@ -1813,22 +1972,25 @@ h2 {
     }
 }
 
-/* Update video popup styles */
+/* Update video popup styles untuk ukuran yang lebih kecil */
 .video-popup {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    width: 60%;
-    max-width: 600px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 70%; /* Ukuran lebih kecil dari sebelumnya */
+    max-width: 600px; /* Batasi lebar maksimum */
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
     z-index: 1002;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
 }
 
 .video-popup.show {
@@ -1841,123 +2003,93 @@ h2 {
 .video-container {
     position: relative;
     width: 100%;
+    padding: 0; /* Hapus padding */
+    box-sizing: border-box;
 }
 
 .video-wrapper {
     position: relative;
     width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 .video-wrapper video {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 8px;
     object-fit: contain;
-    max-height: 70vh;
-    -webkit-user-select: none;  /* Mencegah interaksi */
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    pointer-events: none;  /* Mencegah interaksi dengan video */
+    max-height: 60vh; /* Kurangi tinggi maksimum */
+    background: #000;
+    margin: 0;
+    padding: 0;
 }
 
-/* Sembunyikan kontrol default browser */
-video::-webkit-media-controls {
-    display: none !important;
-}
-
-video::-webkit-media-controls-panel {
-    display: none !important;
-}
-
-video::-webkit-media-controls-play-button {
-    display: none !important;
-}
-
-video::-webkit-media-controls-volume-slider {
-    display: none !important;
-}
-
-video::-webkit-media-controls-mute-button {
-    display: none !important;
-}
-
-video::-webkit-media-controls-timeline {
-    display: none !important;
-}
-
-video::-webkit-media-controls-current-time-display {
-    display: none !important;
-}
-
-/* Firefox */
-video::-moz-range-track {
-    display: none !important;
-}
-
-video::-moz-range-thumb {
-    display: none !important;
-}
-
-/* Edge/IE */
-video::-ms-track {
-    display: none !important;
-}
-
-video::-ms-fill-lower {
-    display: none !important;
-}
-
-video::-ms-fill-upper {
-    display: none !important;
-}
-
-video::-ms-thumb {
-    display: none !important;
-}
-
-/* Update close button style */
+/* Hapus close button style */
 .close-video {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    width: 30px;
-    height: 30px;
-    background: #fff;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    z-index: 1003;
+    display: none; /* Sembunyikan tombol close */
 }
 
-/* Media queries untuk responsivitas */
+/* Overlay effect saat video popup ditampilkan */
+.video-popup::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.video-popup.show::before {
+    opacity: 1;
+}
+
+/* Loading indicator untuk video */
+.video-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #ff6b6b;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    opacity: 0;
+}
+
+.video-wrapper.loading::after {
+    opacity: 1;
+}
+
+/* Responsive adjustments */
 @media screen and (max-width: 768px) {
     .video-popup {
-        width: 85%;
+        width: 85%; /* Sedikit lebih lebar di mobile */
         max-width: none;
     }
     
-    .video-wrapper {
-        padding: 10px;
-    }
-    
     .video-wrapper video {
-        max-height: 50vh;
+        max-height: 50vh; /* Lebih kecil di mobile */
     }
 }
 
-/* Untuk layar yang lebih besar */
-@media screen and (min-width: 1440px) {
+/* Untuk device sangat kecil */
+@media screen and (max-width: 480px) {
     .video-popup {
-        max-width: 1000px;
+        width: 90%;
+        border-radius: 15px;
+    }
+    
+    .video-wrapper video {
+        max-height: 45vh;
     }
 }
 

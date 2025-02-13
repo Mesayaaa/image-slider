@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div class="intro-container">
         <div class="intro-content">
             <div class="intro-text">
                 <h1 class="intro-title">alooo sayang ♥</h1>
-                <p class="intro-message">Mas bikin ini khusus buat km buat valentine(?)</p>
+                <p class="intro-message">Mas bikin ini buat km WKWKWKWKW</p>
                 <p class="intro-message">Mau liat gaaa?</p>
             </div>
             <button class="start-button" style="display: block; margin: 0 auto;">
@@ -118,7 +119,16 @@
         
         <div class="button-container">
             <div class="arrow">&#8595;</div>
-            <button id="playAudio">MAS NYANYI BUAT KM WKWKWKW</button>
+            <div class="controls-wrapper">
+                <button id="playAudio" class="control-button">
+                    <i class="fas fa-music"></i>
+                    <span>MAS NYANYI BUAT KM WKWKWKW</span>
+                </button>
+                <button id="showVideo" class="control-button video-button">
+                    <i class="fas fa-video"></i>
+                    <span>cobaa klik ini juga sayang</span>
+                </button>
+            </div>  
         </div>
     </div>
 
@@ -130,7 +140,7 @@
     <div class="video-popup" id="videoPopup1">
         <div class="video-container">
             <div class="video-wrapper">
-                <video id="videoPlayer1" muted playsinline disablepictureinpicture>
+                <video id="videoPlayer1" muted playsinline disablepictureinpicture nocontrols>
                     <source src="images/ayam.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -191,6 +201,7 @@
     <script>
         const audioPlayer = document.getElementById('backgroundAudio');
         const playButton = document.getElementById('playAudio');
+        const videoButton = document.getElementById('showVideo');
         
         // Tambahkan array untuk melacak particle yang aktif
         const activeParticles = [];
@@ -324,21 +335,31 @@
             }
         }
         
-        // Update button click handler
+        // Audio control
         playButton.addEventListener('click', function(e) {
             if (audioPlayer.paused) {
                 audioPlayer.play().then(() => {
-                    playButton.textContent = 'kalo mau ngepause, klik lagi aja yaa';
+                    playButton.innerHTML = '<i class="fas fa-pause"></i><span>kalo mau ngepause, klik lagi aja yaa</span>';
                     startParticleCreation(e);
-                    isVideoPlaying = true;
-                    showNextVideo();
                 }).catch(error => {
                     console.log("Audio autoplay prevented:", error);
                 });
             } else {
                 audioPlayer.pause();
-                playButton.textContent = 'MAS NYANYI BUAT KM WKWKWKW';
+                playButton.innerHTML = '<i class="fas fa-music"></i><span>MAS NYANYI BUAT KM WKWKWKW</span>';
                 stopParticleCreation();
+            }
+        });
+        
+        // Video control
+        videoButton.addEventListener('click', function() {
+            if (!isVideoPlaying) {
+                isVideoPlaying = true;
+                videoButton.innerHTML = '<i class="fas fa-video-slash"></i><span>TUTUP VIDEO</span>';
+                showNextVideo();
+            } else {
+                isVideoPlaying = false;
+                videoButton.innerHTML = '<i class="fas fa-video"></i><span>cobaa km klik lagii sayang</span>';
                 stopAllVideos();
             }
         });
