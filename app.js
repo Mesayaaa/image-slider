@@ -171,7 +171,7 @@ function showNextVideo() {
         if (currentPlayer) {
             currentPlayer.pause();
             currentPlayer.currentTime = 0;
-            currentPlayer.muted = true; // Pastikan video tetap muted
+            currentPlayer.muted = true;
         }
     }
     
@@ -181,32 +181,55 @@ function showNextVideo() {
     
     if (nextPopup && nextPlayer) {
         nextPopup.classList.add('show');
-        nextPlayer.muted = true; // Pastikan video baru juga muted
+        nextPlayer.muted = true;
+        
+        // Tambahkan event listener untuk video ended
+        nextPlayer.addEventListener('ended', function() {
+            nextPopup.classList.remove('show');
+            videoButton.innerHTML = '<i class="fas fa-video"></i><span>cobaa km klik lagii sayang</span>';
+            isVideoPlaying = false;
+        }, { once: true }); // Gunakan once: true agar event listener dihapus setelah dijalankan
+        
         try {
             const playPromise = nextPlayer.play();
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
                     console.log("Video autoplay prevented:", error);
+                    videoButton.innerHTML = '<i class="fas fa-video"></i><span>cobaa km klik lagii sayang</span>';
+                    isVideoPlaying = false;
                 });
             }
         } catch (error) {
             console.log("Error playing video:", error);
+            videoButton.innerHTML = '<i class="fas fa-video"></i><span>cobaa km klik lagii sayang</span>';
+            isVideoPlaying = false;
         }
+    } else {
+        videoButton.innerHTML = '<i class="fas fa-video"></i><span>cobaa km klik lagii sayang</span>';
+        isVideoPlaying = false;
     }
 }
 
-// Tambahkan event listener untuk mencegah unmute
-document.querySelectorAll('video').forEach(video => {
-    video.addEventListener('volumechange', () => {
-        video.muted = true; // Selalu kembalikan ke muted
+// Tambahkan event listener untuk video ended pada semua video
+document.querySelectorAll('video').forEach((video, index) => {
+    video.addEventListener('ended', function() {
+        const popup = document.getElementById(`videoPopup${index + 1}`);
+        if (popup) {
+            popup.classList.remove('show');
+            videoButton.innerHTML = '<i class="fas fa-video"></i><span>cobaa km klik lagii sayang</span>';
+            isVideoPlaying = false;
+        }
     });
     
-    // Mencegah keyboard shortcuts
+    // Event listener lainnya tetap sama
+    video.addEventListener('volumechange', () => {
+        video.muted = true;
+    });
+    
     video.addEventListener('keydown', (e) => {
         e.preventDefault();
     });
     
-    // Mencegah context menu
     video.addEventListener('contextmenu', (e) => {
         e.preventDefault();
     });
