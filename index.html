@@ -12,8 +12,8 @@
         <div class="intro-content">
             <div class="intro-text">
                 <h1 class="intro-title">alooo sayang ♥</h1>
-                <p class="intro-message">Mas bikin ini buat km WKWKWKWKW</p>
-                <p class="intro-message">Mau liat gaaa?</p>
+                <p class="intro-message">nda bisa ketemu lagi ya, gapapaa</p>
+                <p class="intro-message">its okay, btw mas have something for uu</p>
             </div>
             <button class="start-button" style="display: block; margin: 0 auto;">
                 <span>next</span>
@@ -133,7 +133,7 @@
     </div>
 
     <audio id="backgroundAudio" loop>
-        <source src="blue_yungkai_for_her.mp3" type="audio/mpeg">
+        <source src="blue_yungkai_for_her.wav" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
@@ -189,7 +189,7 @@
         <div class="video-container">
             <div class="video-wrapper">
                 <video id="videoPlayer5" controls muted>
-                    <source src="images/natal.mp4" type="video/mp4">
+                    <source src="images/sailor.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <button class="close-video" id="closeVideo5">&times;</button>
@@ -286,8 +286,16 @@
             clearInterval(particleInterval);
         }
         
+        const videoData = [
+            { src: 'images/ayam.mp4', controls: false, muted: true, playsinline: true, disablePictureInPicture: true },
+            { src: 'images/dress.mp4', controls: true, muted: true },
+            { src: 'images/ikea.mp4', controls: true, muted: true },
+            { src: 'images/lucu.mp4', controls: true, muted: true },
+            { src: 'images/sailor.mp4', controls: true, muted: true }
+        ];
+
         let currentVideoIndex = 0;
-        const totalVideos = 5;
+        const totalVideos = videoData.length;
         let isVideoPlaying = false;
         
         function showNextVideo() {
@@ -459,7 +467,73 @@
                     });
                 });
             });
+
+            // Hapus semua video popup HTML statis
+            createVideoPopups();
+            initializeVideoControls();
         });
+
+        // Ganti semua video popup HTML statis dengan fungsi ini
+        function createVideoPopups() {
+            const popupContainer = document.createElement('div');
+            popupContainer.id = 'video-popups-container';
+            
+            videoData.forEach((video, index) => {
+                const popupHTML = `
+                    <div class="video-popup" id="videoPopup${index + 1}">
+                        <div class="video-container">
+                            <div class="video-wrapper">
+                                <video id="videoPlayer${index + 1}"
+                                    ${video.controls ? 'controls' : ''}
+                                    ${video.muted ? 'muted' : ''}
+                                    ${video.playsinline ? 'playsinline' : ''}
+                                    ${video.disablePictureInPicture ? 'disablepictureinpicture' : ''}
+                                    ${video.nocontrols ? 'nocontrols' : ''}>
+                                    <source src="${video.src}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <button class="close-video" id="closeVideo${index + 1}">&times;</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                popupContainer.insertAdjacentHTML('beforeend', popupHTML);
+            });
+            
+            document.body.appendChild(popupContainer);
+        }
+
+        // Update event listener initialization
+        function initializeVideoControls() {
+            for(let i = 1; i <= totalVideos; i++) {
+                const videoPlayer = document.getElementById(`videoPlayer${i}`);
+                const closeButton = document.getElementById(`closeVideo${i}`);
+                
+                if (videoPlayer) {
+                    videoPlayer.addEventListener('ended', function() {
+                        const popup = document.getElementById(`videoPopup${i}`);
+                        if (popup) {
+                            popup.classList.remove('show');
+                            if (isVideoPlaying) {
+                                showNextVideo();
+                            }
+                        }
+                    });
+                }
+                
+                if (closeButton) {
+                    closeButton.addEventListener('click', function() {
+                        const popup = document.getElementById(`videoPopup${i}`);
+                        const player = document.getElementById(`videoPlayer${i}`);
+                        if (popup && player) {
+                            popup.classList.remove('show');
+                            player.pause();
+                            player.currentTime = 0;
+                        }
+                    });
+                }
+            }
+        }
     </script>
 </body>
 </html>
