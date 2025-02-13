@@ -12,8 +12,8 @@
         <div class="intro-content">
             <div class="intro-text">
                 <h1 class="intro-title">alooo sayang ♥</h1>
-                <p class="intro-message">nda bisa ketemu lagi ya, gapapaa</p>
-                <p class="intro-message">its okay, btw mas have something for uu</p>
+                <p class="intro-message" style="font-size: 1.2em; font-weight: bold;">happy valentine's day!</p>
+                <p class="intro-message">ini mas uda buat dari lama, jadi it's okay yaa sayang, btw mas have something for uu</p>
             </div>
             <button class="start-button" style="display: block; margin: 0 auto;">
                 <span>next</span>
@@ -22,7 +22,22 @@
     </div>
     <div class="loader" style="display: none;">
         <div class="loader-content">
-            <div class="loading-text">Loading...</div>
+            <div class="loading-spinner"></div>
+            <div class="loading-text" style="color: white;">
+                <span>L</span>
+                <span>o</span>
+                <span>a</span>
+                <span>d</span>
+                <span>i</span>
+                <span>n</span>
+                <span>g</span>
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+            </div>
+            <div class="loading-progress">
+                <div class="progress-bar"></div>
+            </div>
         </div>
     </div>
     <div style="margin-left: 20px; margin-right: 20px;">
@@ -415,51 +430,59 @@
             if (warningText) warningText.style.display = 'none';
             
             startButton.addEventListener('click', () => {
+                // Disable button to prevent multiple clicks
+                startButton.disabled = true;
+                
                 // Fade out intro content first
-                introContent.classList.add('fade-out');
+                introContent.style.opacity = '0';
+                introContent.style.transform = 'translateY(-20px)';
                 
                 setTimeout(() => {
-                    // Fade out entire intro container
+                    // Fade out entire intro container with transform
                     introContainer.classList.add('fade-out');
                     
                     // Show and fade in loader
                     loader.style.display = 'flex';
-                    setTimeout(() => {
-                        loader.classList.add('fade-in');
-                    }, 50);
+                    requestAnimationFrame(() => {
+                        loader.style.opacity = '1';
+                        loader.style.visibility = 'visible';
+                    });
                     
                     // After loader animation
                     setTimeout(() => {
                         // Fade out loader
-                        loader.classList.remove('fade-in');
-                        loader.classList.add('fade-out');
+                        loader.style.opacity = '0';
                         
                         setTimeout(() => {
-                            // Hide loader and show main content
+                            // Hide loader and prepare main content
                             loader.style.display = 'none';
+                            
                             if (carousel) {
+                                // Show carousel and warning text
                                 carousel.style.display = 'block';
                                 if (warningText) warningText.style.display = 'block';
                                 
-                                // Small delay before showing content
-                                setTimeout(() => {
+                                // Trigger reflow
+                                void carousel.offsetWidth;
+                                
+                                // Add show class for animation
+                                requestAnimationFrame(() => {
                                     carousel.classList.add('show');
+                                    
                                     if (warningText) {
                                         warningText.style.opacity = '0';
                                         warningText.style.transform = 'translateY(20px)';
-                                        warningText.style.transition = 'all 0.5s ease';
-                                        warningText.style.display = 'block';
                                         
-                                        setTimeout(() => {
+                                        requestAnimationFrame(() => {
                                             warningText.style.opacity = '1';
                                             warningText.style.transform = 'translateY(0)';
-                                        }, 50);
+                                        });
                                     }
-                                }, 50);
+                                });
                             }
-                        }, 500);
-                    }, 1500);
-                }, 300);
+                        }, 800); // Shorter delay for smoother transition
+                    }, 1200); // Reduced loader display time
+                }, 400); // Shorter delay for intro content fade out
             });
 
             // Add smooth scroll behavior
