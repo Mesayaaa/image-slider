@@ -6,6 +6,8 @@ let seeMoreButtons = document.querySelectorAll('.seeMore');
 let lastScrollPosition = 0;
 let isScrolling = false;
 const buttonContainer = document.querySelector('.button-container');
+let scrollTimeout;
+const SCROLL_HIDE_DELAY = 3000; // 3 seconds
 
 // Tambahkan di bagian atas file, setelah deklarasi variabel
 document.documentElement.style.backgroundColor = '#F4F4F4';
@@ -120,38 +122,40 @@ document.addEventListener('DOMContentLoaded', () => {
     if (buttonContainer) {
         buttonContainer.classList.remove('hidden');
     }
+
+    // Set initial timeout to hide buttons
+    scrollTimeout = setTimeout(() => {
+        buttonContainer.classList.add('hidden');
+    }, SCROLL_HIDE_DELAY);
 });
 
 // Update fungsi handleScroll
 function handleScroll() {
-    if (!isScrolling) {
-        window.requestAnimationFrame(() => {
-            const currentScrollPosition = window.pageYOffset;
-            const scrollingDown = currentScrollPosition > lastScrollPosition;
-            const buttonContainer = document.querySelector('.button-container');
-            
-            // Tampilkan button saat scroll ke bawah, sembunyikan saat scroll ke atas
-            if (scrollingDown && currentScrollPosition > 100) { // Tambah threshold
-                buttonContainer.classList.remove('hidden');
-            } else {
-                buttonContainer.classList.add('hidden');
-            }
-            
-            lastScrollPosition = currentScrollPosition;
-            isScrolling = false;
-        });
-    }
-    isScrolling = true;
+    window.requestAnimationFrame(() => {
+        const currentScrollPosition = window.pageYOffset;
+        const scrollingDown = currentScrollPosition > lastScrollPosition;
+        const buttonContainer = document.querySelector('.button-container');
+        
+        // Clear any existing timeout
+        clearTimeout(scrollTimeout);
+        
+        // Kurangi threshold scroll dan tambahkan toleransi untuk scroll kecil
+        const scrollDifference = Math.abs(currentScrollPosition - lastScrollPosition);
+        if (scrollDifference > 2) { // Deteksi pergerakan scroll sekecil 2px
+            buttonContainer.classList.remove('hidden');
+        }
+        
+        // Selalu set timeout untuk menyembunyikan button
+        scrollTimeout = setTimeout(() => {
+            buttonContainer.classList.add('hidden');
+        }, SCROLL_HIDE_DELAY);
+        
+        lastScrollPosition = currentScrollPosition;
+    });
 }
 
-// Pastikan event listener terpasang
+// Update event listener scroll untuk meningkatkan responsivitas
 window.addEventListener('scroll', handleScroll, { passive: true });
-
-// Sembunyikan button saat pertama kali load
-document.addEventListener('DOMContentLoaded', () => {
-    const buttonContainer = document.querySelector('.button-container');
-    buttonContainer.classList.add('hidden');
-});
 
 // Update posisi button container saat resize window
 window.addEventListener('resize', () => {
