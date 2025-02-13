@@ -23,12 +23,19 @@
     <div class="loader" style="display: none;">
         <div class="loader-content">
             <div class="loading-text">
-                <span>S</span>
+                <span>w</span>
                 <span>a</span>
-                <span>y</span>
+                <span>i</span>
+                <span>t</span>
+                <span>t</span>
+                <span> </span>
+                <span>c</span>
                 <span>a</span>
                 <span>n</span>
-                <span>g</span>
+                <span>t</span>
+                <span>i</span>
+                <span>k</span>
+                <span>k</span>
                 <span>.</span>
                 <span>.</span>
                 <span>.</span>
@@ -468,12 +475,14 @@
                         loader.style.opacity = '1';
                         loader.style.visibility = 'visible';
                         
-                        // Add stagger animation to loading text
+                        // Modifikasi animasi untuk loading text
                         const letters = document.querySelectorAll('.loading-text span');
                         letters.forEach((letter, index) => {
                             letter.style.animation = 'none';
                             void letter.offsetWidth;
-                            letter.style.animation = `fadeInOut 1.5s infinite ${index * 0.1}s`;
+                            // Ubah animasi fadeInOut agar tidak menghilang sepenuhnya
+                            letter.style.animation = `loadingTextPulse 1.5s infinite ${index * 0.1}s`;
+                            letter.style.opacity = '1'; // Pastikan huruf tetap terlihat
                         });
                     });
                     

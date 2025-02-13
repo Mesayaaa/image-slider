@@ -99,6 +99,12 @@ header nav a{
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    transform: translateY(-20%);
+    margin-top: -50px;
+    -webkit-transform: translateY(-20%);
+    -moz-transform: translateY(-20%);
+    -ms-transform: translateY(-20%);
+    -o-transform: translateY(-20%);
 }
 
 /* Loading text animation */
@@ -109,12 +115,15 @@ header nav a{
     font-size: 1.5em;
     font-weight: 500;
     margin-bottom: 10px;
+    white-space: nowrap; /* Mencegah text wrapping */
 }
 
 .loading-text span {
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeInOutUp 1.5s infinite;
+    display: inline-block;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    opacity: 1;
 }
 
 /* Progress bar */
@@ -2602,4 +2611,23 @@ h5 {
     .ticket-container {
         transform: scale(0.7); /* Lebih kecil di mobile */
     }
+}
+
+@keyframes loadingTextPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.95);
+    }
+}
+
+.loading-text span {
+    display: inline-block;
+    color: white; /* Ubah warna menjadi putih */
+    font-size: 1.5em; /* Perkecil ukuran font dari 2em menjadi 1.5em */
+    font-weight: bold;
+    opacity: 1;
 }
