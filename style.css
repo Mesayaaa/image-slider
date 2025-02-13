@@ -2631,3 +2631,295 @@ h5 {
     font-weight: bold;
     opacity: 1;
 }
+
+/* Update style untuk container teks dan deskripsi */
+.carousel .list .item .introduce {
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.carousel .list .item .introduce .title {
+    font-size: clamp(18px, 3vw, 24px);
+    line-height: 1.4;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    text-align: center;
+}
+
+.carousel .list .item .introduce .des {
+    font-size: clamp(14px, 2.5vw, 18px);
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    text-align: justify;
+    padding: 0 10px;
+}
+
+/* Update untuk ticket container */
+.ticket-container {
+    width: 100%;
+    max-width: 350px;
+    margin: 20px auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.ticket {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Media queries untuk responsivitas */
+@media screen and (max-width: 768px) {
+    .carousel .list .item .introduce {
+        max-width: 95%;
+        padding: 15px;
+    }
+    
+    .carousel .list .item .introduce .title {
+        font-size: clamp(16px, 2.8vw, 22px);
+    }
+    
+    .carousel .list .item .introduce .des {
+        font-size: clamp(13px, 2.3vw, 16px);
+        padding: 0 5px;
+    }
+    
+    .ticket-container {
+        max-width: 300px;
+        padding: 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .carousel .list .item .introduce {
+        max-width: 100%;
+        padding: 10px;
+    }
+    
+    .carousel .list .item .introduce .title {
+        font-size: clamp(15px, 2.5vw, 20px);
+    }
+    
+    .carousel .list .item .introduce .des {
+        font-size: clamp(12px, 2vw, 15px);
+        padding: 0;
+    }
+}
+
+/* Update style untuk teks panjang di carousel */
+.carousel .list .item div[style*="color: white"] {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.6;
+    font-size: clamp(14px, 2.5vw, 18px);
+    text-align: justify;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, rgba(255,107,107,0.6), rgba(255,142,142,0.8));
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+/* Media queries untuk responsivitas teks panjang */
+@media screen and (max-width: 768px) {
+    .carousel .list .item div[style*="color: white"] {
+        max-width: 90%;
+        padding: 15px 20px;
+        font-size: clamp(13px, 2.3vw, 16px);
+        margin: 10px auto;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .carousel .list .item div[style*="color: white"] {
+        max-width: 95%;
+        padding: 12px 15px;
+        font-size: clamp(12px, 2vw, 15px);
+        margin: 5px auto;
+    }
+}
+
+/* Update untuk container teks */
+.carousel .list .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Pastikan ticket container tetap rapi */
+.ticket-container {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 350px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Update untuk posisi ticket container di mobile */
+@media screen and (max-width: 768px) {
+    .carousel .list .item div[style*="color: white"] {
+        max-width: 90%;
+        padding: 15px 20px;
+        font-size: clamp(13px, 2.3vw, 16px);
+        margin: 10px auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .ticket-container {
+        transform: scale(0.85);
+        margin-top: -20px; /* Geser ke atas */
+        margin-bottom: 20px;
+    }
+
+    /* Atur ulang padding carousel item */
+    .carousel .list .item {
+        padding-bottom: 60px; /* Kurangi padding bawah */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .carousel .list .item div[style*="color: white"] {
+        max-width: 95%;
+        padding: 12px 15px;
+        font-size: clamp(12px, 2vw, 15px);
+        margin: 5px auto;
+    }
+
+    .ticket-container {
+        transform: scale(0.8);
+        margin-top: -30px; /* Geser lebih ke atas untuk layar yang lebih kecil */
+    }
+
+    /* Atur ulang padding carousel item untuk layar lebih kecil */
+    .carousel .list .item {
+        padding-bottom: 40px;
+    }
+}
+
+/* Update untuk tampilan desktop */
+.carousel .list .item {
+    min-height: 80vh; /* Minimal tinggi untuk konten */
+    height: auto; /* Biarkan tinggi menyesuaikan konten */
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Mulai dari atas */
+    box-sizing: border-box;
+    overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
+}
+
+.carousel .list .item .introduce {
+    width: 100%;
+    max-width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative; /* Ubah dari absolute ke relative */
+    transform: none; /* Hapus transform */
+}
+
+/* Update untuk container teks panjang */
+.carousel .list .item div[style*="color: white"] {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    box-sizing: border-box;
+    position: relative;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Pastikan ticket container tidak terpotong */
+.ticket-container {
+    margin: 30px auto;
+    width: 100%;
+    max-width: 350px;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Media query untuk desktop */
+@media screen and (min-width: 769px) {
+    .carousel {
+        height: auto;
+        min-height: 100vh;
+        padding: 40px 0;
+        overflow: visible; /* Ubah dari hidden ke visible */
+    }
+
+    .carousel .list {
+        height: auto;
+        min-height: fit-content; /* Ubah ke fit-content */
+        overflow: visible;
+        padding-bottom: 60px;
+    }
+
+    .carousel .list .item {
+        min-height: fit-content; /* Ubah ke fit-content */
+        height: auto;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        overflow: visible;
+        margin-bottom: 40px;
+    }
+
+    .carousel .list .item .introduce {
+        width: 100%;
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+        box-sizing: border-box;
+        position: relative;
+        transform: none;
+    }
+
+    .carousel .list .item div[style*="color: white"] {
+        width: 100%;
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 30px;
+        box-sizing: border-box;
+        position: relative;
+        transform: none;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    /* Pastikan konten terakhir memiliki margin bottom yang cukup */
+    .carousel .list .item:last-child {
+        margin-bottom: 100px;
+    }
+}
