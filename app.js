@@ -7,7 +7,7 @@ let lastScrollPosition = 0;
 let isScrolling = false;
 const buttonContainer = document.querySelector('.button-container');
 let scrollTimeout;
-const SCROLL_HIDE_DELAY = 3000; // 3 seconds
+const SCROLL_HIDE_DELAY = 1500; // Makes buttons hide after 1.5 seconds
 
 // Tambahkan di bagian atas file, setelah deklarasi variabel
 document.documentElement.style.backgroundColor = '#F4F4F4';
